@@ -19,10 +19,7 @@ class HomeTabsView extends React.Component {
     render() {
         return (
             <Tabs tabs={tabs}>
-                    <EventList/>
-                <View style={style}>
-                    <Text>Content of Second Tab</Text>
-                </View>
+                <EventList/>
                 <View style={style}>
                     <Text>Content of Third Tab</Text>
                 </View>
