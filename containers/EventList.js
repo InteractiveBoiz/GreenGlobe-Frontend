@@ -1,45 +1,86 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { List } from '@ant-design/react-native';
-import { useQuery, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { Query } from 'react-apollo';
+import EventCard from '../components/EventCard';
 const Item = List.Item;
 
 const GET_EVENTS = gql`
-{
-    events{
-        id
-        isPublicEvent
-        isOrganized
-        eventActivity
-        eventName
-        eventDescription
-        eventRequirements
-    }
-}
+	{
+		events {
+			id
+			hostId
+			isPublicEvent
+			isOrganized
+			eventActivity
+			eventName
+			eventDescription
+			eventRequirements
+			eventDate
+			eventCreated
+			eventEnd
+			attendees
+		}
+	}
 `;
 
 const EventList = () => {
-    const { loading, error, data } = useQuery(GET_EVENTS);
-    console.log(error)
+	return (
+		<Query query={GET_EVENTS}>
+			{({ loading, error, data }) => {
+				if (loading) return <Text>Loading...</Text>;
+				if (error) return <Text>Error! {error.message}</Text>;
 
-    if (loading) return (<View><Text>Loading...</Text></View>)
-    if (error) return (<View><Text>Error...</Text></View>)
+				return (
+					<ScrollView
+						style={{ flex: 1, backgroundColor: '#f5f5f9' }}
+						automaticallyAdjustContentInsets={false}
+						showsHorizontalScrollIndicator={true}
+						showsVerticalScrollIndicator={true}
+					>
+						<List>{data.events.map((event) => <EventCard event={event} key={event.id} />)}</List>
+					</ScrollView>
+				);
+			}}
+		</Query>
+	);
+};
+export default EventList;
 
-    return (
-        <ScrollView
-            style={{ flex: 1, backgroundColor: '#f5f5f9' }}
-            automaticallyAdjustContentInsets={false}
-            showsHorizontalScrollIndicator={true}
-            showsVerticalScrollIndicator={true}
-        >
-            <List renderHeader={'basic'}>
-                {data.events.map(({ id, eventName }) => (
-                    <Item data-seed="logId" key={id}>
-                        <Text>{id}: {eventName}</Text>
-                    </Item>
-                ))}
-            </List>
-        </ScrollView>
-    )
-}
-export default EventList
+/*
+<List>{data.events.map(({ id, eventName }) => <EventCard eventName={eventName} key={id} />)}</List>
+<Item data-seed="logId" key={id}>
+                                <Text>{id}: {eventName}</Text>
+							</Item>
+							
+const EventList = () => {
+	const { loading, error, data } = useQuery(GET_EVENTS);
+
+	if (loading)
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+	if (error)
+		return (
+			<View>
+				<Text>Error...</Text>
+			</View>
+		);
+	return (
+		<ScrollView
+			style={{ flex: 1, backgroundColor: '#f5f5f9' }}
+			automaticallyAdjustContentInsets={false}
+			showsHorizontalScrollIndicator={true}
+			showsVerticalScrollIndicator={true}
+		>
+			<List>{data.events.map((event) => <EventCard event={event} key={event.id} />)}</List>
+		</ScrollView>
+	);
+};
+
+
+
+*/
