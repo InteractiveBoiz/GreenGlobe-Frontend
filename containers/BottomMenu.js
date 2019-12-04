@@ -39,7 +39,7 @@ class BottomMenu extends React.Component {
           selected={this.state.selectedTab === 'blueTab'}
           onPress={() => this.onChangeTab('blueTab')}
         >
-            {<HomeTabsView/>}
+        {<HomeTabsView/>}
         </TabBar.Item>
         <TabBar.Item
           icon={<Icon name="user" />}

@@ -75,7 +75,7 @@ const EventList = () => {
         >
             <List renderHeader={'basic'}>
                 {data.events.map(({ id, eventName }) => (
-                    <Item data-seed="logId">
+                    <Item data-seed="logId" key={id}>
                         <Text>{id}: {eventName}</Text>
                     </Item>
                 ))}
