@@ -36,24 +36,24 @@ class BottomMenu extends React.Component {
         <TabBar.Item
           title="Home"
           icon={<Icon name="home" />}
-          selected={this.state.selectedTab === 'blueTab'}
-          onPress={() => this.onChangeTab('blueTab')}
+          selected={this.state.selectedTab === 'homeTab'}
+          onPress={() => this.onChangeTab('homeTab')}
         >
         {<HomeTabsView/>}
         </TabBar.Item>
         <TabBar.Item
           icon={<Icon name="user" />}
           title="Profile"
-          selected={this.state.selectedTab === 'yellowTab'}
-          onPress={() => this.onChangeTab('yellowTab')}
+          selected={this.state.selectedTab === 'profileTab'}
+          onPress={() => this.onChangeTab('profileTab')}
         >
           {this.renderContent('My Tab')}
         </TabBar.Item>
         <TabBar.Item
           icon={<Icon name="like" />}
           title="Social"
-          selected={this.state.selectedTab === 'greenTab'}
-          onPress={() => this.onChangeTab('greenTab')}
+          selected={this.state.selectedTab === 'socialTab'}
+          onPress={() => this.onChangeTab('socialTab')}
         >
           {this.renderContent('Friend Tab')}
         </TabBar.Item>
