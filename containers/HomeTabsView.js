@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Tabs } from '@ant-design/react-native';
 import EventList from './EventList';
-import EventDetail from '../components/EventDetail';
 
 const style = {
 	alignItems: 'center',
@@ -12,22 +11,6 @@ const style = {
 };
 
 const tabs = [ { title: 'List' }, { title: 'Map' } ];
-
-/*const RootStack = StackNavigator(
-	{
-		List: {
-			screen: EventList
-		},
-		EventDetail: {
-			screen: EventDetail
-		}
-	},
-	{
-		initialRouteName: 'List'
-	}
-);*/
-
-
 
 class HomeTabsView extends React.Component {
 	render() {

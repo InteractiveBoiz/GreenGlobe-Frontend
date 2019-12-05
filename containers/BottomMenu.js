@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from '@ant-design/react-native';
 import HomeTabsView from './HomeTabsView';
@@ -41,7 +40,7 @@ class BottomMenu extends React.Component {
 							selected={this.state.selectedTab === 'homeTab'}
 							onPress={() => this.onChangeTab('homeTab')}
 						>
-							<HomeTabsView />
+						<HomeTabsView />
 						</TabBar.Item>
 						<TabBar.Item
 							icon={<Icon name="user" />}
@@ -49,7 +48,7 @@ class BottomMenu extends React.Component {
 							selected={this.state.selectedTab === 'profileTab'}
 							onPress={() => this.onChangeTab('profileTab')}
 						>
-							{this.renderContent('My Tab')}
+						{this.renderContent('My Tab')}
 						</TabBar.Item>
 						<TabBar.Item
 							icon={<Icon name="like" />}
