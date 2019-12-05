@@ -5,15 +5,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from '@ant-design/react-native';
 import HomeTabsView from './HomeTabsView';
-
-// Create the client as outlined in the setup guide
-const client = new ApolloClient({
-	cache: new InMemoryCache(),
-	link: new HttpLink({
-		//uri: 'http://localhost:5000/api/Event/',
-		uri: 'http://10.0.2.2:5000/api/event/'
-	})
-});
+import Client from '../graphql/Client'
 
 class BottomMenu extends React.Component {
 	constructor(props) {
@@ -40,7 +32,7 @@ class BottomMenu extends React.Component {
 
 	render() {
 		return (
-			<ApolloProvider client={client}>
+			<ApolloProvider client={Client}>
 				<Provider>
 					<TabBar unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="#f5f5f5">
 						<TabBar.Item
