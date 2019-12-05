@@ -5,7 +5,8 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from '@ant-design/react-native';
 import HomeTabsView from './HomeTabsView';
-import Client from '../graphql/Client'
+import Client from '../graphql/Client';
+import Profile from './Profile';
 
 class BottomMenu extends React.Component {
 	constructor(props) {
@@ -49,7 +50,7 @@ class BottomMenu extends React.Component {
 							selected={this.state.selectedTab === 'profileTab'}
 							onPress={() => this.onChangeTab('profileTab')}
 						>
-							{this.renderContent('My Tab')}
+							<Profile/>
 						</TabBar.Item>
 						<TabBar.Item
 							icon={<Icon name="like" />}
