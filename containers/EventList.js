@@ -4,6 +4,8 @@ import { List } from '@ant-design/react-native';
 import { gql } from '@apollo/client';
 import { Query } from 'react-apollo';
 import EventCard from '../components/EventCard';
+import { withNavigation } from 'react-navigation';
+
 const Item = List.Item;
 
 const GET_EVENTS = gql`
@@ -25,7 +27,7 @@ const GET_EVENTS = gql`
 	}
 `;
 
-const EventList = () => {
+const EventList = (props) => {
 	return (
 		<Query query={GET_EVENTS}>
 			{({ loading, error, data }) => {
@@ -39,14 +41,18 @@ const EventList = () => {
 						showsHorizontalScrollIndicator={true}
 						showsVerticalScrollIndicator={true}
 					>
-						<List>{data.events.map((event) => <EventCard event={event} key={event.id} />)}</List>
+						<List>
+							{data.events.map((event) => (
+								<EventCard event={event} key={event.id} navigation={props.navigation} />
+							))}
+						</List>
 					</ScrollView>
 				);
 			}}
 		</Query>
 	);
 };
-export default EventList;
+export default withNavigation(EventList);
 
 /*
 <List>{data.events.map(({ id, eventName }) => <EventCard eventName={eventName} key={id} />)}</List>

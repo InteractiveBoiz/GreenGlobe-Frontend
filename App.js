@@ -7,22 +7,30 @@
  */
 
 import React from 'react';
-import { Provider } from '@ant-design/react-native';
-import BottomMenu from "./containers/BottomMenu"
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-import Client from './graphql/Client'
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import BottomMenu from './containers/BottomMenu'
+import EventDetail from './components/EventDetail'
 
-// Create the client as outlined in the setup guide
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    //uri: 'http://localhost:5000/api/Event/',
-    uri: 'http://10.0.2.2:5000/api/event/',
-  })
-});
+const MainNavigator = createStackNavigator(
+	{
 
-class App extends React.Component {
+		Home: {
+      screen: BottomMenu,
+      navigationOptions: () => ({
+        header: null
+      }),
+		},
+		EventDetail: {
+			screen: EventDetail
+		}
+	},
+	{
+		initialRouteName: 'Home'
+	}
+);
+
+/*class App extends React.Component {
   state = {
     isReady: false
   };
@@ -31,11 +39,26 @@ class App extends React.Component {
     return (
       <ApolloProvider client={client}>
         <Provider>
-          {<BottomMenu/>}
+          <MainNavigator/>
         </Provider>
       </ApolloProvider>
     );
   }
-}
+}*/
+const App = createAppContainer(MainNavigator)
 
 export default App;
+
+/*
+render() {
+    return (
+      <ApolloProvider client={client}>
+        <Provider>
+          <BottomMenu/>
+        </Provider>
+      </ApolloProvider>
+    );
+  }
+
+
+*/

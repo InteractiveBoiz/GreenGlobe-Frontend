@@ -7,7 +7,7 @@ const EventCard = (props) => {
     console.log(props.event.eventActivity)
     return (
         <WingBlank size="lg" >
-          <Card >
+          <Card>
             <Card.Header
               title={props.event.eventName}
               thumbStyle={{ width: 30, height: 30 }}
@@ -15,7 +15,7 @@ const EventCard = (props) => {
             />
             <Card.Body>
               <View style={{ height: 42 }}>
-                <Text style={{ marginLeft: 16 }}>{props.event.eventDescription}</Text>
+                <Text style={{ marginLeft: 16 }} onPress={() => props.navigation.navigate('EventDetail')}>{props.event.eventDescription}</Text>
               </View>
             </Card.Body>
             <Card.Footer
