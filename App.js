@@ -7,19 +7,23 @@
  */
 
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import BottomMenu from './containers/BottomMenu'
-import EventDetail from './components/EventDetail'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { ApolloProvider } from 'react-apollo';
+import { Provider } from '@ant-design/react-native';
+import { LocaleProvider} from 'antd-mobile'
+import enUS from 'antd-mobile/lib/locale-provider/en_US';
+import BottomMenu from './containers/BottomMenu';
+import EventDetail from './components/EventDetail';
+import Client from './graphql/Client';
 
 const MainNavigator = createStackNavigator(
 	{
-
 		Home: {
-      screen: BottomMenu,
-      navigationOptions: () => ({
-        header: null
-      }),
+			screen: BottomMenu,
+			navigationOptions: () => ({
+				header: null
+			})
 		},
 		EventDetail: {
 			screen: EventDetail
@@ -30,35 +34,17 @@ const MainNavigator = createStackNavigator(
 	}
 );
 
-/*class App extends React.Component {
-  state = {
-    isReady: false
-  };
-
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <Provider>
-          <MainNavigator/>
-        </Provider>
-      </ApolloProvider>
-    );
-  }
-}*/
-const App = createAppContainer(MainNavigator)
+const AppContainer = createAppContainer(MainNavigator);
+const App = () => {
+	return (
+		<ApolloProvider client={Client}>
+			<Provider>
+				<LocaleProvider locale={enUS}>
+					<AppContainer />
+				</LocaleProvider>
+			</Provider>
+		</ApolloProvider>
+	);
+};
 
 export default App;
-
-/*
-render() {
-    return (
-      <ApolloProvider client={client}>
-        <Provider>
-          <BottomMenu/>
-        </Provider>
-      </ApolloProvider>
-    );
-  }
-
-
-*/

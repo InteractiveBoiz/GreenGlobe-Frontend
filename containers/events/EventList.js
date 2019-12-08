@@ -1,39 +1,19 @@
 import React from 'react';
 import { ScrollView, Text } from 'react-native';
 import { List } from '@ant-design/react-native';
-import { gql } from '@apollo/client';
 import { Query } from 'react-apollo';
-import EventCard from '../components/EventCard';
+import EventCard from '../../components/EventCard';
 import { withNavigation } from 'react-navigation';
-
-const Item = List.Item;
-
-const GET_EVENTS = gql`
-	{
-		events {
-			id
-			hostId
-			isPublicEvent
-			isOrganized
-			eventActivity
-			eventName
-			eventDescription
-			eventRequirements
-			eventDate
-			eventCreated
-			eventEnd
-			attendees
-		}
-	}
-`;
-
+//{userId: 'user/1-A'}
 const EventList = (props) => {
+	const queryToUse = props.queryToUse;
+	const variablesToUse = props.variablesToUse;
 	return (
-		<Query query={GET_EVENTS}>
+		<Query query={queryToUse} variables={variablesToUse}>
 			{({ loading, error, data }) => {
 				if (loading) return <Text>Loading...</Text>;
 				if (error) return <Text>Error! {error.message}</Text>;
-
+				console.log(data);
 				return (
 					<ScrollView
 						style={{ flex: 1, backgroundColor: '#f5f5f9' }}
@@ -42,9 +22,13 @@ const EventList = (props) => {
 						showsVerticalScrollIndicator={true}
 					>
 						<List>
-							{data.events.map((event) => (
-								<EventCard event={event} key={event.id} navigation={props.navigation} />
-							))}
+							{data.events != undefined ? (
+								data.events.map((event) => (
+									<EventCard event={event} key={event.id} navigation={props.navigation} />
+								))
+							) : (
+								<Text>No Data</Text>
+							)}
 						</List>
 					</ScrollView>
 				);
