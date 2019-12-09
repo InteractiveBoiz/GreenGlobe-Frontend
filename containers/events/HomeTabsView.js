@@ -4,6 +4,7 @@ import { Tabs } from '@ant-design/react-native';
 import EventList from './EventList';
 import MyEventsView from './MyEventsView';
 import EventTest from '../../components/EventTest';
+import EventMapView from '../EventMapView';
 import { GET_EVENTS } from '../../graphql/event/EventQuerries';
 
 const style = {
@@ -21,7 +22,7 @@ class HomeTabsView extends React.Component {
 			<Tabs tabs={tabs} initialPage={1}>
 				<MyEventsView />
 				<EventList queryToUse={GET_EVENTS} variablesToUse={{ userId: 'user/1-A' }} />
-				<Text>Hello Map</Text>
+				<EventMapView/>
 			</Tabs>
 		);
 	}
