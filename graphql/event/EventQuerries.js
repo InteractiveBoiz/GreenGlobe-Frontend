@@ -33,7 +33,7 @@ export const ATTENDING_EVENTS = gql`
 export const HOSTING_EVENTS = gql`
 	query hostingEvents($userId: ID!) {
 		events: hostingEvents(userId: $userId) {
-			idF
+			id
 			eventName
 			eventDescription
 		}
