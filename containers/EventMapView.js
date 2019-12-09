@@ -4,6 +4,7 @@ import MapView from 'react-native-maps';
 class EventMapView extends React.Component {
 	state = {};
 
+	
 	render() {
 		return (
 			<MapView
