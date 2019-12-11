@@ -52,7 +52,7 @@ class EventMapView extends React.Component {
 					newRegion.latitude = myPosition.latitude;
 					newRegion.longitude = myPosition.longitude;*/
 					this.setState({
-						myPosition: myPosition,
+						myPosition: myPosition
 						//region: newRegion
 					});
 				}
@@ -60,6 +60,9 @@ class EventMapView extends React.Component {
 			null,
 			GEOLOCATION_OPTIONS
 		);
+		let newRegion = this.state.region;
+		newRegion.latitude = this.state.myPosition.latitude;
+		newRegion.longitude = this.state.myPosition.longitude;
 	}
 
 	onRegionChange = (region) => {
