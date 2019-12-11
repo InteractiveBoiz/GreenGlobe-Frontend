@@ -36,6 +36,7 @@ target 'GreenGlobe' do
 
   pod 'react-native-viewpager', :path => '../node_modules/@react-native-community/viewpager'
 
+
   target 'GreenGlobeTests' do
     inherit! :search_paths
     # Pods for testing
