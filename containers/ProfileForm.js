@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { Card, Button, InputItem, List } from '@ant-design/react-native';
+import { Card, Button, InputItem, List, Picker } from '@ant-design/react-native';
 import { GET_USER } from '../graphql/Profile/ProfileQuery';
 import { UPDATE_USER } from '../graphql/Profile/ProfileMutations';
 import customClient from '../graphql/UserClient';
@@ -9,7 +9,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 function ProfileForm() {
 	const { loading, error, data } = useQuery(GET_USER, {
 		variables: {
-			id: '02f8b65c-512d-4366-ae64-cfafce8dc24e'
+			id: 'users/65-A'
 		},
 		client: customClient
 	});
@@ -64,15 +64,22 @@ function ProfileForm() {
 					>
 						<Text style={{ fontSize: 12 }}>Email:</Text>
 					</InputItem>
-					<InputItem
+					<Picker
 						clear
-						defaultValue={data.user.userCategory}
+						data={userCategories}
 						editable={isEditing}
-						placeholder={data.user.userCategory}
+						cols={1}
+						defaultValue={data.user.userCategory}
+						onChange={(value) => {
+							setUser({...user, userCategory: value[0] });
+						}}
+						style={{ fontSize: 5 }}
 					>
-						<Text style={{ fontSize: 12 }}>UserCategory:</Text>
-					</InputItem>
-
+						<List.Item arrow="horizontal">
+						{!isEditing ? (data.user.userCategory) : (user.userCategory) }
+							
+						</List.Item>
+					</Picker>
 					{!isEditing ? (
 						<Button
 							type="primary"
@@ -94,7 +101,8 @@ function ProfileForm() {
 										id: user.id,
 										user: {
 											username: user.username,
-											email: user.email
+											email: user.email,
+											userCategory: user.userCategory
 										}
 									}
 								})
@@ -112,5 +120,11 @@ function ProfileForm() {
 		</Card>
 	);
 }
+
+const userCategories = [
+	{ value: 'User', label: 'User' },
+	{ value: 'Organisation', label: 'Organisation' },
+	{ value: 'NonUser', label: 'Non-user' }
+];
 
 export default ProfileForm;
