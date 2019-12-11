@@ -1,64 +1,41 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Card, Button } from '@ant-design/react-native';
+import { Card, Button, InputItem, List } from '@ant-design/react-native';
 import { ApolloClient, gql, HttpLink, InMemoryCache } from '@apollo/client';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
+import UpdateUser from '../graphql/Profile/UpdateUser';
+import UPDATE_USER from '../graphql/Profile/ProfileMutations';
+import ProfileForm from './ProfileForm';
 
-const customClient = new ApolloClient({
-	cache: new InMemoryCache(),
-	link: new HttpLink({
-		uri: 'http:10.0.2.2:5000/api/users'
-	})
-});
-
-
-
-const GET_USER = gql`
-	{
-		user(id: "02f8b65c-512d-4366-ae64-cfafce8dc24e") {
-			id
-			username
-			email
-			isVerified
-			userCategory
-		}
-	}
-`;
 
 class Profile extends React.Component {
+	state = {
+		isEditing: false,
+		user: {},
+		userLoaded: false
+	};
+
+	handleClick() {
+		this.setState(
+			(prevState) => ({
+				isEditing: !prevState.isEditing
+			}),
+			function() {
+				console.log('Editing mode is:	' + this.state.isEditing);
+			}
+		);
+	}
+
+	sendData() {
+		console.log('Sending data');
+		var response = UpdateUser(this.state.user.id, this.state.user);
+		console.log(response);
+		console.log('Data has been sent!?');
+	}
+
 	render() {
 		return (
-			
-				<Query query={GET_USER} client={customClient}>
-					{({ loading, error, data }) => {
-						if (loading) return <Text>Loading...</Text>;
-						if (error) return <Text>Error! {error.message}</Text>;
-
-						return (
-							<View>
-							<Card full>
-								<Card.Header
-									title="ProfileTitle"
-									thumbStyle={{ width: 30, height: 30 }}
-									thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
-									extra="Verified"
-								/>
-								<Card.Body>
-									<View style={{ height: 42 }}>
-										<Text style={{ marginLeft: 16 }}>{data.user.username}</Text>
-										<Text style={{ marginLeft: 16 }}>{data.user.email}</Text>
-										<Text style={{ marginLeft: 16 }}>{data.user.userCategory}</Text>
-										<Text style={{ marginLeft: 16 }}>{data.user.id}</Text>
-										<Text style={{ marginLeft: 16 }}>{data.user.isVerified}</Text>
-									</View>
-								</Card.Body>
-							</Card>
-							<Button type="primary">edit</Button>
-							</View>
-						);
-					}}
-				</Query>
-			
+			<ProfileForm/>
 		);
 	}
 }
