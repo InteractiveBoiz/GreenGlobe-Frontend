@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Card, WingBlank } from '@ant-design/react-native';
+import { withNavigation } from 'react-navigation';
 
 const EventCard = (props) => {
 	console.log(props.event.eventName);
@@ -30,4 +31,4 @@ const EventCard = (props) => {
 		</TouchableOpacity>
 	);
 };
-export default EventCard;
+export default withNavigation(EventCard);

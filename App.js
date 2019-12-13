@@ -16,6 +16,7 @@ import enUS from 'antd-mobile/lib/locale-provider/en_US';
 import BottomMenu from './containers/BottomMenu';
 import EventDetail from './components/events/EventDetail';
 import CreateMapView from './containers/map/CreateMapView';
+import EventMapView from './containers/map/EventMapView';
 import Client from './graphql/Client';
 
 const MainNavigator = createStackNavigator(
@@ -31,6 +32,9 @@ const MainNavigator = createStackNavigator(
 		},
 		CreateEventMap: {
 			screen: CreateMapView
+		},
+		EventMapView: {
+			screen: EventMapView
 		}
 	},
 	{

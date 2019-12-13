@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { Card, Carousel, WhiteSpace, Button } from '@ant-design/react-native';
 import { Mutation } from 'react-apollo';
 import { ATTEND_EVENT } from '../../graphql/event/EventMutations';
+import { GET_EVENT } from '../../graphql/event/EventQuerries';
 
 const EventDetail = (props) => {
 	const event = props.navigation.getParam('event');
@@ -69,7 +70,11 @@ const EventDetail = (props) => {
 								<Text style={{ marginLeft: 16 }}>{event.eventDescription}</Text>
 								<Text style={{ marginLeft: 16, fontWeight: 'bold' }}>Event Requirements:</Text>
 								<Text style={{ marginLeft: 16 }}>{event.eventRequirements}</Text>
-								<Button>See Map Details</Button>
+								<Button
+									onPress={() => props.navigation.navigate('EventMapView', { queryToUse: GET_EVENT, variablesToUse:{ id: event.id} })}
+								>
+									See Map Details
+								</Button>
 							</View>
 						</Card.Body>
 					</Card>

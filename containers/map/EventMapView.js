@@ -5,6 +5,7 @@ import Geolocation from '@react-native-community/geolocation';
 import { Query } from 'react-apollo';
 import { GET_EVENTS } from '../../graphql/event/EventQuerries';
 import EventCard from '../../components/events/EventCard';
+import MapEventsMarkers from '../../components/map/MapEventsMarkers';
 import { withNavigation } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
@@ -34,10 +35,7 @@ class EventMapView extends React.Component {
 			latitude: 0,
 			longitude: 0
 		},
-		draggablePosition: {
-			latitude: 0,
-			longitude: 0
-		}
+		selectedEvent: null
 	};
 
 	componentDidMount() {
@@ -55,8 +53,7 @@ class EventMapView extends React.Component {
 
 				this.setState({
 					initialPosition: initialRegion,
-					markerPosition: initialRegion,
-					draggablePosition: initialRegion
+					markerPosition: initialRegion
 				});
 			},
 			(error) => alert(JSON.stringify(error)),
@@ -94,20 +91,40 @@ class EventMapView extends React.Component {
 		}
 	}
 
+	setSelectedEvent = (data) => {
+		this.setState({
+			selectedEvent: data
+		});
+	};
+
 	render() {
+		let queryToUse = this.props.queryToUse;
+		let variablesToUse = this.props.variablesToUse;
+		if (variablesToUse === undefined) {
+			variablesToUse = this.props.navigation.getParam('variablesToUse');
+			queryToUse = this.props.navigation.getParam('queryToUse');
+			if (variablesToUse === undefined) {
+				variablesToUse = {};
+			}
+		}
+
+		console.log('queryToUse', queryToUse);
+		console.log('variablesToUse', variablesToUse);
 		return (
-			<Query query={GET_EVENTS}>
+			<Query query={queryToUse} variables={variablesToUse}>
 				{({ loading, error, data }) => {
 					if (loading) return <Text>Loading...</Text>;
 					if (error) return <Text>Error! {error.message}</Text>;
 					console.log(data);
+
 					return (
 						<View style={styles.container}>
 							<MapView
-								region={this.state.initialPosition}
+								region={this.state.markerPosition}
 								showsCompass={true}
 								rotateEnabled={false}
 								style={styles.map}
+								onPress={() => this.setSelectedEvent(null)}
 							>
 								<Marker coordinate={this.state.markerPosition}>
 									<View style={styles.radius}>
@@ -115,20 +132,11 @@ class EventMapView extends React.Component {
 									</View>
 								</Marker>
 
-								{data.events.map((marker) => {
-									console.log('marker', marker.map.meetUpPosition);
-									console.log('data marker', data.events[0].map.meetUpPosition);
-									return (
-										<Marker key={marker.id} coordinate={marker.map.meetUpPosition}>
-											<Callout
-												onPress={() =>
-													this.props.navigation.navigate('EventDetail', { event: marker })}
-											>
-												<EventCard event={marker} navigation={this.props.navigation} />
-											</Callout>
-										</Marker>
-									);
-								})}
+								<MapEventsMarkers
+									events={data.events}
+									setSelectedEvent={this.setSelectedEvent}
+									selectedEvent={this.state.selectedEvent}
+								/>
 							</MapView>
 						</View>
 					);

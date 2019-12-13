@@ -20,7 +20,7 @@ class HomeTabsView extends React.Component {
 			<Tabs tabs={tabs} initialPage={1}>
 				<MyEventsView />
 				<EventList queryToUse={GET_EVENTS} variablesToUse={{ userId: 'user/1-A' }} />
-				<EventMapView />
+				<EventMapView queryToUse={GET_EVENTS} variablesToUse={{}} />
 			</Tabs>
 		);
 	}
