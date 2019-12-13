@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
 import HomeTabsView from './events/HomeTabsView';
-import EventQueryTest from '../components/EventQueryTest'
+import EventQueryTest from '../components/events/EventQueryTest'
 
 class BottomMenu extends React.Component {
 	constructor(props) {

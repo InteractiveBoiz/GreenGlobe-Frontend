@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, PermissionsAndroid } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import isEqual from 'lodash/isEqual';
 
@@ -13,7 +13,13 @@ const ANCHOR = { x: 0.5, y: 0.5 };
 
 const colorOfmyLocationMapMarker = 'blue';
 
-class EventMapView extends React.Component {
+/*const getCurrentLocation = () => {
+	return new Promise((resolve, reject) => {
+		Geolocation.getCurrentPosition((position) => resolve(position), (e) => reject(e));
+	});
+};*/
+
+class Backup extends React.Component {
 	state = {
 		region: {
 			latitude: 37.78825,
@@ -34,12 +40,34 @@ class EventMapView extends React.Component {
 		if (Platform.OS === 'android') {
 			PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((granted) => {
 				if (granted && this.state.mounted) {
-					this.watchLocation();
+					this.getCurrentLocation();
 				}
 			});
 		} else {
-			this.watchLocation();
+			this.getCurrentLocation();
 		}
+	}
+
+	async getCurrentLocation() {
+		Geolocation.getCurrentPosition(
+			(position) => {
+				let region = {
+					latitude: parseFloat(position.coords.latitude),
+					longitude: parseFloat(position.coords.longitude),
+					latitudeDelta: 5,
+					longitudeDelta: 5
+				};
+				this.setState({
+					initialRegion: region
+				});
+			},
+			(error) => console.log(error),
+			{
+				enableHighAccuracy: true,
+				timeout: 20000,
+				maximumAge: 1000
+			}
+		);
 	}
 
 	watchLocation() {
@@ -60,9 +88,23 @@ class EventMapView extends React.Component {
 			null,
 			GEOLOCATION_OPTIONS
 		);
-		let newRegion = this.state.region;
-		newRegion.latitude = this.state.myPosition.latitude;
-		newRegion.longitude = this.state.myPosition.longitude;
+		getCurrentLocation().then((position) => {
+			if (position) {
+				this.setState(
+					{
+						region: {
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude,
+							latitudeDelta: 0.003,
+							longitudeDelta: 0.003
+						}
+					},
+					function() {
+						console.log('thist state region', this.state.region);
+					}
+				);
+			}
+		});
 	}
 
 	onRegionChange = (region) => {
@@ -85,6 +127,13 @@ class EventMapView extends React.Component {
 		}
 	}
 
+	goToInitialLocation() {
+		let initialRegion = Object.assign({}, this.state.initialRegion);
+		initialRegion['latitudeDelta'] = 0.005;
+		initialRegion['longitudeDelta'] = 0.005;
+		this.mapView.animateToRegion(initialRegion, 2000);
+	}
+
 	render() {
 		const myPosition = this.state.myPosition;
 		if (!myPosition) {
@@ -94,9 +143,19 @@ class EventMapView extends React.Component {
 		heading = myPosition.heading;
 
 		return (
-			<MapView style={{ flex: 1 }} initialRegion={this.state.region} onRegionChange={this.onRegionChange}>
+			/*<MapView style={{ flex: 1 }} initialRegion={this.state.region} region={this.state.region} onRegionChange={this.onRegionChange}>
 				<Marker coordinate={coordinate} style={styles.mapMarker} />
-			</MapView>
+			</MapView>*/
+			<MapView
+				style={{ flex: 1 }}
+				region={this.state.region}
+				followUserLocation={true}
+				ref={(ref) => (this.mapView = ref)}
+				zoomEnabled={true}
+				showsUserLocation={true}
+				onMapReady={this.goToInitialRegion.bind(this)}
+				initialRegion={this.state.initialRegion}
+			/>
 		);
 	}
 }
@@ -167,25 +226,4 @@ const styles = StyleSheet.create({
 	markerText: { width: 0, height: 0 }
 });
 
-export default EventMapView;
-
-/*
-componentDidMount() {
-		Geolocation.getCurrentPosition((info) => {
-			console.log(info);
-			console.log(info.coords.latitude);
-			console.log(info.coords.longitude);
-			this.setState({
-				initialPosition: {
-					latitude: info.coords.latitude,
-					longitude: info.coords.longitude,
-					latitudeDelta: 0.10,
-					longitudeDelta: 0.05
-				}
-			}, function (){
-				console.log("updated state: " + this.state.initialPosition.latitude)
-			});
-		});
-	}
-
-*/
+export default Backup

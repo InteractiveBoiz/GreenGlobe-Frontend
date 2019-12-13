@@ -3,6 +3,7 @@ import { Text, ScrollView } from 'react-native';
 import { List, InputItem, TextareaItem, DatePicker, Checkbox, Picker, Button } from '@ant-design/react-native';
 import { CREATE_EVENT } from '../../graphql/event/EventMutations';
 import { Mutation } from 'react-apollo';
+import { withNavigation } from 'react-navigation';
 
 const activityTypes = [
 	{ value: 'Cleanup_Small_Items', label: 'Cleanup Small Items' },
@@ -24,7 +25,8 @@ class CreateEventView extends React.Component {
 		eventEndDate: null,
 		organized: false,
 		isPublic: true,
-		activity: []
+		activity: [],
+		mapData: null
 	};
 
 	onChangeTab(tabName) {
@@ -32,6 +34,12 @@ class CreateEventView extends React.Component {
 			selectedTab: tabName
 		});
 	}
+
+	onMapFinish = (data) => {
+		this.setState({ mapData: data }, function() {
+			console.log('mapdata :', this.state.mapData);
+		});
+	};
 
 	render() {
 		return (
@@ -103,11 +111,13 @@ class CreateEventView extends React.Component {
 							/>
 							<DatePicker
 								value={this.state.eventStartDate}
-								mode="date"
+								mode="datetime"
 								defaultDate={new Date()}
 								minDate={new Date()}
 								maxDate={new Date(2026, 11, 3)}
-								onChange={this.onChange}
+								onChange={(value) => {
+									this.setState({ eventStartDate: value });
+								}}
 								format="YYYY-MM-DD"
 								locale="en_US"
 							>
@@ -115,16 +125,24 @@ class CreateEventView extends React.Component {
 							</DatePicker>
 							<DatePicker
 								value={this.state.eventEndDate}
-								mode="date"
+								mode="datetime"
 								defaultDate={new Date()}
 								minDate={new Date()}
 								maxDate={new Date(2026, 11, 3)}
-								onChange={this.onChange}
+								onChange={(value) => {
+									this.setState({ eventEndDate: value });
+								}}
 								format="YYYY-MM-DD"
 								locale="en_US"
 							>
 								<List.Item arrow="horizontal">Select End Date</List.Item>
 							</DatePicker>
+							<Button
+								onPress={() =>
+									this.props.navigation.navigate('CreateEventMap', { onMapFinish: this.onMapFinish })}
+							>
+								Create Map Details
+							</Button>
 							<Button
 								type="primary"
 								onPress={() => {
@@ -141,7 +159,12 @@ class CreateEventView extends React.Component {
 												eventDate: this.state.eventStartDate,
 												eventCreated: new Date(),
 												eventEnd: this.state.eventEndDate,
-												attendees: []
+												attendees: [],
+												map: {
+													meetUpPosition: this.state.mapData.startDraggablePosition,
+													areaOfInterest: this.state.mapData.areaPolygons.coordinates,
+													exitPosition: this.state.mapData.endDraggablePosition
+												}
 											}
 										}
 									})
@@ -159,7 +182,7 @@ class CreateEventView extends React.Component {
 	}
 }
 
-export default CreateEventView;
+export default withNavigation(CreateEventView);
 
 /*
 

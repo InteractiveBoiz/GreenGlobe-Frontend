@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, Text } from 'react-native';
 import { List } from '@ant-design/react-native';
 import { Query } from 'react-apollo';
-import EventCard from '../../components/EventCard';
+import EventCard from '../../components/events/EventCard';
 import { withNavigation } from 'react-navigation';
 //{userId: 'user/1-A'}
 const EventList = (props) => {

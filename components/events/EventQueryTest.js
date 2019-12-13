@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
-import { ATTENDING_EVENTS } from '../graphql/event/EventQuerries';
-import client from '../graphql/Client'
+import { ATTENDING_EVENTS } from '../../graphql/event/EventQuerries';
+import client from '../../graphql/Client'
 
 function AddTodo () {
 	const { loading, error, data } = useQuery(ATTENDING_EVENTS, {

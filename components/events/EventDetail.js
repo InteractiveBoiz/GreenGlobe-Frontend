@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { Card, Carousel, WhiteSpace, Button } from '@ant-design/react-native';
 import { Mutation } from 'react-apollo';
-import { ATTEND_EVENT } from '../graphql/event/EventMutations'
+import { ATTEND_EVENT } from '../../graphql/event/EventMutations'
 
 const EventDetail = (props) => {
 	const event = props.navigation.getParam('event');
