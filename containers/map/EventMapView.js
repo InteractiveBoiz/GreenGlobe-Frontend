@@ -1,7 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import { Query } from 'react-apollo';
+import { GET_EVENTS } from '../../graphql/event/EventQuerries';
+import EventCard from '../../components/events/EventCard';
+import { withNavigation } from 'react-navigation';
 
 const { width, height } = Dimensions.get('window');
 
@@ -92,20 +96,44 @@ class EventMapView extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<MapView
-					region={this.state.initialPosition}
-					showsCompass={true}
-					rotateEnabled={false}
-					style={styles.map}
-				>
-					<Marker coordinate={this.state.markerPosition}>
-						<View style={styles.radius}>
-							<View style={styles.marker} />
+			<Query query={GET_EVENTS}>
+				{({ loading, error, data }) => {
+					if (loading) return <Text>Loading...</Text>;
+					if (error) return <Text>Error! {error.message}</Text>;
+					console.log(data);
+					return (
+						<View style={styles.container}>
+							<MapView
+								region={this.state.initialPosition}
+								showsCompass={true}
+								rotateEnabled={false}
+								style={styles.map}
+							>
+								<Marker coordinate={this.state.markerPosition}>
+									<View style={styles.radius}>
+										<View style={styles.marker} />
+									</View>
+								</Marker>
+
+								{data.events.map((marker) => {
+									console.log('marker', marker.map.meetUpPosition);
+									console.log('data marker', data.events[0].map.meetUpPosition);
+									return (
+										<Marker key={marker.id} coordinate={marker.map.meetUpPosition}>
+											<Callout
+												onPress={() =>
+													this.props.navigation.navigate('EventDetail', { event: marker })}
+											>
+												<EventCard event={marker} navigation={this.props.navigation} />
+											</Callout>
+										</Marker>
+									);
+								})}
+							</MapView>
 						</View>
-					</Marker>
-				</MapView>
-			</View>
+					);
+				}}
+			</Query>
 		);
 	}
 }
@@ -146,7 +174,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default EventMapView;
+export default withNavigation(EventMapView);
 
 /*
 componentDidMount() {

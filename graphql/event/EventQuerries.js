@@ -16,6 +16,20 @@ export const GET_EVENTS = gql`
 			eventCreated
 			eventEnd
 			attendees
+			map {
+				meetUpPosition {
+					latitude
+					longitude
+				}
+				areaOfInterest {
+					latitude
+					longitude
+				}
+				exitPosition {
+					latitude
+					longitude
+				}
+			}
 		}
 	}
 `;
