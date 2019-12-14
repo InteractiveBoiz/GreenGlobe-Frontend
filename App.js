@@ -14,7 +14,9 @@ import { Provider } from '@ant-design/react-native';
 import { LocaleProvider} from 'antd-mobile'
 import enUS from 'antd-mobile/lib/locale-provider/en_US';
 import BottomMenu from './containers/BottomMenu';
-import EventDetail from './components/EventDetail';
+import EventDetail from './components/events/EventDetail';
+import CreateMapView from './containers/map/CreateMapView';
+import EventMapView from './containers/map/EventMapView';
 import Client from './graphql/Client';
 
 const MainNavigator = createStackNavigator(
@@ -27,6 +29,12 @@ const MainNavigator = createStackNavigator(
 		},
 		EventDetail: {
 			screen: EventDetail
+		},
+		CreateEventMap: {
+			screen: CreateMapView
+		},
+		EventMapView: {
+			screen: EventMapView
 		}
 	},
 	{

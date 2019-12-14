@@ -16,6 +16,20 @@ export const GET_EVENTS = gql`
 			eventCreated
 			eventEnd
 			attendees
+			map {
+				meetUpPosition {
+					latitude
+					longitude
+				}
+				areaOfInterest {
+					latitude
+					longitude
+				}
+				exitPosition {
+					latitude
+					longitude
+				}
+			}
 		}
 	}
 `;
@@ -33,9 +47,42 @@ export const ATTENDING_EVENTS = gql`
 export const HOSTING_EVENTS = gql`
 	query hostingEvents($userId: ID!) {
 		events: hostingEvents(userId: $userId) {
-			idF
+			id
 			eventName
 			eventDescription
+		}
+	}
+`;
+
+export const GET_EVENT = gql`
+	query event($id: ID!) {
+		events : event(id: $id) {
+			id
+			hostId
+			isPublicEvent
+			isOrganized
+			eventActivity
+			eventName
+			eventDescription
+			eventRequirements
+			eventDate
+			eventCreated
+			eventEnd
+			attendees
+			map {
+				meetUpPosition {
+					latitude
+					longitude
+				}
+				areaOfInterest {
+					latitude
+					longitude
+				}
+				exitPosition {
+					latitude
+					longitude
+				}
+			}
 		}
 	}
 `;
