@@ -5,7 +5,10 @@ import { withNavigation } from 'react-navigation';
 
 const EventCard = (props) => {
 	return (
-		<TouchableOpacity onPress={() => props.navigation.navigate('EventDetail', { event: props.event })}>
+		<TouchableOpacity
+			onPress={() =>
+				props.navigation.navigate('EventDetail', { event: props.event, eventName: props.event.eventName })}
+		>
 			<WingBlank size="lg">
 				<Card>
 					<Card.Header

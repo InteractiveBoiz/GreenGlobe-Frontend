@@ -11,7 +11,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from '@ant-design/react-native';
-import { LocaleProvider} from 'antd-mobile'
+import { LocaleProvider } from 'antd-mobile';
 import enUS from 'antd-mobile/lib/locale-provider/en_US';
 import BottomMenu from './containers/BottomMenu';
 import EventDetail from './components/events/EventDetail';
@@ -28,13 +28,22 @@ const MainNavigator = createStackNavigator(
 			})
 		},
 		EventDetail: {
-			screen: EventDetail
+			screen: EventDetail,
+			navigationOptions: ({ navigation }) => ({
+				title: `${navigation.state.params.eventName}`
+			})
 		},
 		CreateEventMap: {
-			screen: CreateMapView
+			screen: CreateMapView,
+			navigationOptions: ({ navigation }) => ({
+				title: `Create Map Details`
+			})
 		},
 		EventMapView: {
-			screen: EventMapView
+			screen: EventMapView,
+			navigationOptions: ({ navigation }) => ({
+				title: `${navigation.state.params.eventName}'s Map Details`
+			})
 		}
 	},
 	{

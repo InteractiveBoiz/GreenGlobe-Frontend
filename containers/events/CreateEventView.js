@@ -150,7 +150,9 @@ class CreateEventView extends React.Component {
 							</DatePicker>
 							<Button
 								onPress={() =>
-									this.props.navigation.navigate('CreateEventMap', { onMapFinish: this.onMapFinish })}
+									this.props.navigation.navigate('CreateEventMap', {
+										onMapFinish: this.onMapFinish
+									})}
 							>
 								Create Map Details
 							</Button>
