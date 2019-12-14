@@ -15,12 +15,15 @@ const style = {
 const tabs = [ { title: 'My Events' }, { title: 'List' }, { title: 'Map' } ];
 
 class HomeTabsView extends React.Component {
-
 	render() {
 		return (
 			<Tabs tabs={tabs} initialPage={1}>
 				<MyEventsView />
-				<EventList queryToUse={GET_EVENTS} variablesToUse={{ userId: 'user/1-A' }} />
+				<EventList
+					queryToUse={GET_EVENTS}
+					variablesToUse={{ userId: 'user/1-A' }}
+					emptyListText={'No Events'}
+				/>
 				<EventMapView queryToUse={GET_EVENTS} variablesToUse={{}} />
 			</Tabs>
 		);

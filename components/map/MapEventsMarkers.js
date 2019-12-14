@@ -8,9 +8,9 @@ const MapEventsMarkers = (props) => {
 	const events = props.events;
 	const selectedEvent = props.selectedEvent;
 
-	console.log('events', events);
+	/*console.log('events', events);
 	console.log('selectedEvent', selectedEvent);
-	console.log('typeof', Array.isArray(events));
+	console.log('typeof', Array.isArray(events));*/
 	if (Array.isArray(events)) {
 		return (
 			<View>

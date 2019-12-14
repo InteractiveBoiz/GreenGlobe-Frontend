@@ -4,8 +4,6 @@ import { Card, WingBlank } from '@ant-design/react-native';
 import { withNavigation } from 'react-navigation';
 
 const EventCard = (props) => {
-	console.log(props.event.eventName);
-	console.log(props.event.eventActivity);
 	return (
 		<TouchableOpacity onPress={() => props.navigation.navigate('EventDetail', { event: props.event })}>
 			<WingBlank size="lg">

@@ -27,7 +27,7 @@ class MyEventsView extends React.Component {
 		this.setState({
 			selectedTab: tabName
 		});
-	}
+	};
 
 	render() {
 		return (
@@ -38,7 +38,11 @@ class MyEventsView extends React.Component {
 					selected={this.state.selectedTab === 'attendingEvents'}
 					onPress={() => this.onChangeTab('attendingEvents')}
 				>
-					<EventList queryToUse={ATTENDING_EVENTS} variablesToUse={{ userId: 'user/1-A' }} />
+					<EventList
+						queryToUse={ATTENDING_EVENTS}
+						variablesToUse={{ userId: 'user/1-B' }}
+						emptyListText={'You are not Attending any Events'}
+					/>
 				</TabBar.Item>
 				<TabBar.Item
 					icon={<Icon name="plus-circle" />}
@@ -46,7 +50,7 @@ class MyEventsView extends React.Component {
 					selected={this.state.selectedTab === 'createEvent'}
 					onPress={() => this.onChangeTab('createEvent')}
 				>
-					<CreateEventView onChangeTab={this.onChangeTab}/>
+					<CreateEventView onChangeTab={this.onChangeTab} />
 				</TabBar.Item>
 				<TabBar.Item
 					icon={<Icon name="edit" />}
@@ -54,7 +58,7 @@ class MyEventsView extends React.Component {
 					selected={this.state.selectedTab === 'manageMyEvents'}
 					onPress={() => this.onChangeTab('manageMyEvents')}
 				>
-					<ManageMyEvents/>
+					<ManageMyEvents />
 				</TabBar.Item>
 			</TabBar>
 		);
