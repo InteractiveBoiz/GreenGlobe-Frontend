@@ -2,8 +2,10 @@ import React from 'react';
 import { Text, ScrollView } from 'react-native';
 import { List, InputItem, TextareaItem, DatePicker, Checkbox, Picker, Button } from '@ant-design/react-native';
 import { CREATE_EVENT } from '../../graphql/event/EventMutations';
+import { GET_EVENTS } from '../../graphql/event/EventQuerries';
 import { Mutation } from 'react-apollo';
 import { withNavigation } from 'react-navigation';
+import { gql } from '@apollo/client';
 
 const activityTypes = [
 	{ value: 'Cleanup_Small_Items', label: 'Cleanup Small Items' },
@@ -43,8 +45,17 @@ class CreateEventView extends React.Component {
 
 	render() {
 		return (
-			<Mutation mutation={CREATE_EVENT}>
-				{(createEventMutation, { data }) => (
+			<Mutation
+				mutation={CREATE_EVENT}
+				update={(cache, { data }) => {
+					const { events } = cache.readQuery({ query: GET_EVENTS });
+					cache.writeQuery({
+						query: GET_EVENTS,
+						data: { events: events.concat([ data ]) }
+					});
+				}}
+			>
+				{(createEventMutation) => (
 					<ScrollView
 						style={{ flex: 1, backgroundColor: '#f5f5f9' }}
 						automaticallyAdjustContentInsets={false}

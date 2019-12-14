@@ -1,10 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { Query } from 'react-apollo';
-import { GET_EVENTS } from '../../graphql/event/EventQuerries';
-import EventCard from '../../components/events/EventCard';
 import MapEventsMarkers from '../../components/map/MapEventsMarkers';
 import { withNavigation } from 'react-navigation';
 

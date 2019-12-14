@@ -4,13 +4,15 @@ import { List } from '@ant-design/react-native';
 import { Query } from 'react-apollo';
 import EventCard from '../../components/events/EventCard';
 import { withNavigation } from 'react-navigation';
+import RefreshTest from './RefreshTest';
 //{userId: 'user/1-A'}
 const EventList = (props) => {
 	const queryToUse = props.queryToUse;
 	const variablesToUse = props.variablesToUse;
 	return (
-		<Query query={queryToUse} variables={variablesToUse}>
-			{({ loading, error, data }) => {
+		<Query query={queryToUse} variables={variablesToUse} notifyOnNetworkStatusChange>
+			{({ loading, error, data, refetch, networkStatus }) => {
+				if (networkStatus === 4) <Text>Refetching!</Text>;
 				if (loading) return <Text>Loading...</Text>;
 				if (error) return <Text>Error! {error.message}</Text>;
 				console.log(data);
@@ -30,6 +32,7 @@ const EventList = (props) => {
 								<Text>No Data</Text>
 							)}
 						</List>
+						<RefreshTest refetch={refetch}/>
 					</ScrollView>
 				);
 			}}

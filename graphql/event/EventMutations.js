@@ -13,7 +13,31 @@ export const CREATE_EVENT = gql`
 	mutation createEvent($event: EventInput!) {
 		createEvent(event: $event) {
 			id
+			hostId
+			isPublicEvent
+			isOrganized
+			eventActivity
 			eventName
+			eventDescription
+			eventRequirements
+			eventDate
+			eventCreated
+			eventEnd
+			attendees
+			map {
+				meetUpPosition {
+					latitude
+					longitude
+				}
+				areaOfInterest {
+					latitude
+					longitude
+				}
+				exitPosition {
+					latitude
+					longitude
+				}
+			}
 		}
 	}
 `;

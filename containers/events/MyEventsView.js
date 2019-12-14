@@ -23,7 +23,7 @@ class MyEventsView extends React.Component {
 		);
 	}
 
-	onChangeTab(tabName) {
+	onChangeTab = (tabName) => {
 		this.setState({
 			selectedTab: tabName
 		});
@@ -46,7 +46,7 @@ class MyEventsView extends React.Component {
 					selected={this.state.selectedTab === 'createEvent'}
 					onPress={() => this.onChangeTab('createEvent')}
 				>
-					<CreateEventView />
+					<CreateEventView onChangeTab={this.onChangeTab}/>
 				</TabBar.Item>
 				<TabBar.Item
 					icon={<Icon name="edit" />}
