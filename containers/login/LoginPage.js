@@ -1,4 +1,5 @@
-import { Component } from 'react-native';
+import React,{ Component } from 'react';
+import  LoginForm  from "./LoginForm";
 
 class LoginPage extends Component {
   state = {  }

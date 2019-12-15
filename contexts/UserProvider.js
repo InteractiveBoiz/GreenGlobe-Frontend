@@ -4,7 +4,7 @@ import UserContext from './UserContext';
 class UserProvider extends React.Component {
 	state = {
 		user: {
-      name: "GunnarliDingDong"
+      name: "Swagger"
     }
 	};
 

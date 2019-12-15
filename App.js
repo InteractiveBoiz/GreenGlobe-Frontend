@@ -17,7 +17,7 @@ import BottomMenu from './containers/BottomMenu';
 import EventDetail from './components/EventDetail';
 import Client from './graphql/Client';
 import UserProvider from "./contexts/UserProvider";
-
+import LoginPage from "./containers/login/LoginPage";
 const MainNavigator = createStackNavigator(
 	{
 		Home: {
@@ -28,10 +28,13 @@ const MainNavigator = createStackNavigator(
 		},
 		EventDetail: {
 			screen: EventDetail
+		},
+		Login: {
+			screen: LoginPage
 		}
 	},
 	{
-		initialRouteName: 'Home'
+		initialRouteName: 'Login'
 	}
 );
 
