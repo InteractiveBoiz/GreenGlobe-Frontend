@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon, SearchBar, TabBar } from '@ant-design/react-native';
 import HomeTabsView from './events/HomeTabsView';
+import Profile from './Profile'
 
 class BottomMenu extends React.Component {
 	constructor(props) {
@@ -43,7 +44,7 @@ class BottomMenu extends React.Component {
 					selected={this.state.selectedTab === 'profileTab'}
 					onPress={() => this.onChangeTab('profileTab')}
 				>
-					<Text>Profile</Text>
+					<Profile/>
 				</TabBar.Item>
 				<TabBar.Item
 					icon={<Icon name="like" />}

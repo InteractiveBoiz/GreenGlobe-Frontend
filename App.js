@@ -11,11 +11,12 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from '@ant-design/react-native';
-import { LocaleProvider} from 'antd-mobile'
+import { LocaleProvider } from 'antd-mobile';
 import enUS from 'antd-mobile/lib/locale-provider/en_US';
 import BottomMenu from './containers/BottomMenu';
 import EventDetail from './components/EventDetail';
 import Client from './graphql/Client';
+import UserProvider from "./contexts/UserProvider";
 
 const MainNavigator = createStackNavigator(
 	{
@@ -37,13 +38,15 @@ const MainNavigator = createStackNavigator(
 const AppContainer = createAppContainer(MainNavigator);
 const App = () => {
 	return (
-		<ApolloProvider client={Client}>
+		<UserProvider>
+			<ApolloProvider client={Client}>
 			<Provider>
 				<LocaleProvider locale={enUS}>
 					<AppContainer />
 				</LocaleProvider>
 			</Provider>
 		</ApolloProvider>
+		</UserProvider>
 	);
 };
 
