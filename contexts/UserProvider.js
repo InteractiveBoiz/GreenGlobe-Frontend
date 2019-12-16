@@ -9,7 +9,7 @@ class UserProvider extends React.Component {
 	};
 
 	login = (user) => {
-		this.setState({ user: user });
+		this.setState({ user: user }, function(){console.log("UserProvider State: ", this.state.user)});
 	};
 
 	render() {

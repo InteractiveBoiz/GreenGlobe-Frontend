@@ -16,7 +16,8 @@ query user($id: ID!){
 export const USER_LOGIN = gql`
 query userLogin($username: String!, $password: String!) {
   userLogin(username: $username, password: $password) {
-    id
+		id
+		password
     email
 		username
 		groupsList

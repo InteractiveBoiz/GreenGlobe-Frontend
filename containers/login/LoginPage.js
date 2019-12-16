@@ -1,5 +1,7 @@
 import React,{ Component } from 'react';
 import  LoginForm  from "./LoginForm";
+import { withNavigation } from 'react-navigation';  
+
 
 class LoginPage extends Component {
   state = {  }
@@ -10,4 +12,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+export default withNavigation(LoginPage);
