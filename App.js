@@ -18,7 +18,8 @@ import EventDetail from './components/events/EventDetail';
 import CreateMapView from './containers/map/CreateMapView';
 import EventMapView from './containers/map/EventMapView';
 import Client from './graphql/Client';
-
+import UserProvider from "./contexts/UserProvider";
+import LoginPage from "./containers/login/LoginPage";
 const MainNavigator = createStackNavigator(
 	{
 		Home: {
@@ -44,23 +45,28 @@ const MainNavigator = createStackNavigator(
 			navigationOptions: ({ navigation }) => ({
 				title: `${navigation.state.params.eventName}'s Map Details`
 			})
+		},
+		Login: {
+			screen: LoginPage
 		}
 	},
 	{
-		initialRouteName: 'Home'
+		initialRouteName: 'Login'
 	}
 );
 
 const AppContainer = createAppContainer(MainNavigator);
 const App = () => {
 	return (
-		<ApolloProvider client={Client}>
+		<UserProvider>
+			<ApolloProvider client={Client}>
 			<Provider>
 				<LocaleProvider locale={enUS}>
 					<AppContainer />
 				</LocaleProvider>
 			</Provider>
 		</ApolloProvider>
+		</UserProvider>
 	);
 };
 
