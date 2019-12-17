@@ -2,8 +2,9 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Tabs } from '@ant-design/react-native';
 import GroupsList from './GroupsList';
+import ChatView from '../chat/ChatView';
 
-const tabs = [ { title: 'Invitations' }, { title: 'Groups' }, { title: 'Friends' } ];
+const tabs = [ { title: 'Invitations' }, { title: 'Groups' }, { title: 'Friends' }, { title: 'Chat' } ];
 
 class SocialTabsView extends React.Component {
 	render() {
@@ -12,6 +13,7 @@ class SocialTabsView extends React.Component {
 				<Text>Invitations</Text>
 				<GroupsList />
 				<Text>Friends</Text>
+				<ChatView/>
 			</Tabs>
 		);
 	}
