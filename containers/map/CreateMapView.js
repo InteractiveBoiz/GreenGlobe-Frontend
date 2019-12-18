@@ -116,8 +116,10 @@ class CreateMapView extends React.Component {
 			areaPolygons,
 			endDraggablePosition
 		};
+		//setEventState({ ...eventState, eventDescription: value });
 		console.log('mapdate before send', mapData);
-		this.props.navigation.state.params.onMapFinish(mapData);
+		const eventState = this.props.navigation.state.params.eventState
+		this.props.navigation.state.params.onMapFinish({ ...eventState, map: mapData });
 		this.props.navigation.goBack();
 	};
 

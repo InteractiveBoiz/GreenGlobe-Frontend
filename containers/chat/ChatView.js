@@ -3,15 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { InputItem, WhiteSpace } from '@ant-design/react-native';
 import ChatList from './ChatList';
 import ChatInput from './ChatInput';
-import ChatMessageCard from '../../components/chat/ChatMessageCard';
 
 const ChatView = (props) => {
+	const event = props.event;
 	return (
 		<View style={{ flex: 1 }}>
-			<ChatList chatId={'chats/33-A'} />
+			<ChatList chatId={event.chatId} />
 			<WhiteSpace />
 			<View>
-				<ChatInput chatId={'chats/33-A'} />
+				<ChatInput chatId={event.chatId} />
 			</View>
 		</View>
 	);

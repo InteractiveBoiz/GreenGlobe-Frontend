@@ -21,7 +21,7 @@ class HomeTabsView extends React.Component {
 				<MyEventsView />
 				<EventList
 					queryToUse={GET_EVENTS}
-					variablesToUse={{ userId: 'user/1-A' }}
+					variablesToUse={{}}
 					emptyListText={'No Events'}
 				/>
 				<EventMapView queryToUse={GET_EVENTS} variablesToUse={{}} />

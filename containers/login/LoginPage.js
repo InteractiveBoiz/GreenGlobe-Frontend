@@ -2,7 +2,6 @@ import React,{ Component } from 'react';
 import  LoginForm  from "./LoginForm";
 import { withNavigation } from 'react-navigation';  
 
-
 class LoginPage extends Component {
   state = {  }
   render() {

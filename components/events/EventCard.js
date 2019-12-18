@@ -7,7 +7,7 @@ const EventCard = (props) => {
 	return (
 		<TouchableOpacity
 			onPress={() =>
-				props.navigation.navigate('EventDetail', { event: props.event, eventName: props.event.eventName })}
+				props.navigation.navigate('EventDetailView', { event: props.event, eventName: props.event.eventName, refetch: props.refetch })}
 		>
 			<WingBlank size="lg">
 				<Card>

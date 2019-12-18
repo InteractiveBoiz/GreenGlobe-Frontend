@@ -24,7 +24,7 @@ const MapEventsMarkers = (props) => {
 									onPress={() => props.setSelectedEvent(marker)}
 								>
 									<Callout
-										onPress={() => props.navigation.navigate('EventDetail', { event: marker })}
+										onPress={() => props.navigation.navigate('EventDetailView', { event: marker, eventName: marker.eventName })}
 									>
 										<EventCard event={marker} navigation={props.navigation} />
 									</Callout>

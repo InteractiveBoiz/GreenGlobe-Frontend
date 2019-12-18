@@ -25,7 +25,7 @@ const EventList = (props) => {
 		<SafeAreaView style={styles.container}>
 			<FlatList
 				data={data.events}
-				renderItem={(event) => <EventCard event={event.item} />}
+				renderItem={(event) => <EventCard event={event.item} refetch={refetch}/>}
 				keyExtractor={(event) => event.id}
 				refreshing={networkStatus === 4}
 				onRefresh={() => refetch()}

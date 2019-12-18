@@ -2,30 +2,33 @@ import React from 'react';
 import { gql } from '@apollo/client';
 
 export const GET_USER = gql`
-query user($id: ID!){
-  user(id: $id) {
-    id
-    username
-    email
-    isVerified
-    userCategory
-  }
-}
+	query user($id: ID!) {
+		user(id: $id) {
+			id
+			password
+			email
+			username
+			groupsList
+			friendsList
+			isVerified
+			userCategory
+		}
+	}
 `;
 
 export const USER_LOGIN = gql`
-query userLogin($username: String!, $password: String!) {
-  userLogin(username: $username, password: $password) {
-		id
-		password
-    email
-		username
-		groupsList
-		friendsList
-		isVerified
-		userCategory
-  }
-}
+	query userLogin($username: String!, $password: String!) {
+		userLogin(username: $username, password: $password) {
+			id
+			password
+			email
+			username
+			groupsList
+			friendsList
+			isVerified
+			userCategory
+		}
+	}
 `;
 
 export const GET_USER2 = gql`

@@ -4,7 +4,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
     //uri: 'https://localhost:44384/api/Event/',
-    uri: 'http://10.0.2.2:5000/api/chat/'
+    uri: 'http://10.0.2.2:5001/api/chat/'
   })
 });
 

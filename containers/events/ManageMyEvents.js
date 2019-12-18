@@ -8,7 +8,7 @@ class ManageMyEvents extends React.Component {
 		return (
 			<EventList
 				queryToUse={HOSTING_EVENTS}
-				variablesToUse={{ userId: 'user/1-A' }}
+				variablesToUse={this.props.variablesToUse}
 				emptyListText={'You are not Hosting any Events'}
 			/>
 		);

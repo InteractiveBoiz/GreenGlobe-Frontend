@@ -5,6 +5,7 @@ import EventList from './EventList';
 import CreateEventView from './CreateEventView';
 import ManageMyEvents from './ManageMyEvents';
 import { ATTENDING_EVENTS } from '../../graphql/event/EventQuerries';
+import UserContext from '../../contexts/UserContext';
 
 class MyEventsView extends React.Component {
 	constructor(props) {
@@ -30,6 +31,8 @@ class MyEventsView extends React.Component {
 	};
 
 	render() {
+		const value = this.context;
+		console.log('context in myeventsview:', value.user)
 		return (
 			<TabBar unselectedTintColor="#949494" tintColor="#33A3F4" barTintColor="#f5f5f5">
 				<TabBar.Item
@@ -40,7 +43,7 @@ class MyEventsView extends React.Component {
 				>
 					<EventList
 						queryToUse={ATTENDING_EVENTS}
-						variablesToUse={{ userId: 'user/1-B' }}
+						variablesToUse={{ userId: value.user.id }}
 						emptyListText={'You are not Attending any Events'}
 					/>
 				</TabBar.Item>
@@ -58,11 +61,12 @@ class MyEventsView extends React.Component {
 					selected={this.state.selectedTab === 'manageMyEvents'}
 					onPress={() => this.onChangeTab('manageMyEvents')}
 				>
-					<ManageMyEvents />
+					<ManageMyEvents variablesToUse={{ userId: value.user.id }}/>
 				</TabBar.Item>
 			</TabBar>
 		);
 	}
 }
+MyEventsView.contextType = UserContext;
 
 export default MyEventsView;

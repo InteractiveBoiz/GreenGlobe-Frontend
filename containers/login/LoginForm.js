@@ -1,7 +1,7 @@
 import React,{ useState, useContext } from 'react';
 import { Text } from 'react-native';
 import { Card, InputItem, Button, List } from '@ant-design/react-native';
-import { USER_LOGIN } from '../../graphql/Profile/ProfileQuery';
+import { USER_LOGIN, GET_USER } from '../../graphql/Profile/ProfileQuery';
 import customClient from '../../graphql/UserClient';
 import { useLazyQuery } from '@apollo/react-hooks';
 import UserContext from '../../contexts/UserContext';
@@ -20,6 +20,9 @@ const LoginForm = (props) => {
 	const [ userLogin, { loading, error, data } ] = useLazyQuery(USER_LOGIN, {
 		client: customClient
 	});
+	const [ developmentUserLogin, { data: developmentData } ] = useLazyQuery(GET_USER, {
+		client: customClient
+	});
 
 	console.log("User: ", data);
 	if(data != undefined && !isLoggedIn){
@@ -29,6 +32,14 @@ const LoginForm = (props) => {
 		props.navigation.navigate('Home')
 
 	}
+	else if(developmentData != undefined && !isLoggedIn){
+		setIsLoggedIn(true);
+		const contextValue = useContext(UserContext);
+		contextValue.login(developmentData.user)
+		props.navigation.navigate('Home')
+
+	}
+
 	return (
 		<Card full>
 			<Card.Body>
@@ -65,6 +76,18 @@ const LoginForm = (props) => {
 						}}
 					>
 						Login
+					</Button>
+					<Button
+						type="primary"
+						onPress={() => {
+							developmentUserLogin({
+								variables: {
+									id: 'users/1-A',
+								}
+							})
+						}}
+					>
+						Development Login
 					</Button>
 				</List>
 			</Card.Body>

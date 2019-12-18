@@ -30,6 +30,7 @@ export const GET_EVENTS = gql`
 					longitude
 				}
 			}
+			chatId
 		}
 	}
 `;
@@ -63,6 +64,7 @@ export const ATTENDING_EVENTS = gql`
 					longitude
 				}
 			}
+			chatId
 		}
 	}
 `;
@@ -96,6 +98,7 @@ export const HOSTING_EVENTS = gql`
 					longitude
 				}
 			}
+			chatId
 		}
 	}
 `;
@@ -129,6 +132,7 @@ export const GET_EVENT = gql`
 					longitude
 				}
 			}
+			chatId
 		}
 	}
 `;
