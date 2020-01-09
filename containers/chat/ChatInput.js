@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View, Keyboard } from 'react-native';
 import { InputItem, Button } from '@ant-design/react-native';
 import { useMutation } from 'react-apollo';
 import { SEND_MESSAGE } from '../../graphql/chat/ChatMutations';
 import client from '../../graphql/ChatClient';
+import UserContext from '../../contexts/UserContext';
 
 const ChatInput = (props) => {
+	const userContext = useContext(UserContext);
 	const [ textInput, setTextInput ] = useState('');
 	const [ sendMessage, { loading: sendMessageLoading, error: sendMessageError } ] = useMutation(SEND_MESSAGE, {
 		client: client
@@ -32,7 +34,7 @@ const ChatInput = (props) => {
 							id: props.chatId,
 							message: {
 								messageDateTime: new Date(),
-								owner: 'user/1-B',
+								owner: userContext.user.id,
 								text: textInput
 							}
 						}
